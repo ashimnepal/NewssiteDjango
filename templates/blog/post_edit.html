@@ -1,0 +1,12 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-md-9">
+  <form action="/post-edit/{{ post.pk }}/" method="post" class="post-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="save btn btn-default" type="submit">Save</button>
+  </form>
+  </div>
+  </div>
+{% endblock content %}

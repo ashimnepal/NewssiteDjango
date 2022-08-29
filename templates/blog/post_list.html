@@ -1,0 +1,33 @@
+{% extends "blog/base.html" %}
+{% block content %}
+  
+    <div class="row">
+      {% for post in posts %}
+      <div class="col-md-8">
+        <div class="post">
+          {% if post.published_at %}<div class="date">{{ post.published_at }}</div>{% endif %}
+          <h1>
+            <a href="/post-detail/{{ post.pk }}/">{{ post.title }}</a>
+          </h1>
+          {% include "blog/partials/tags.html" %}
+          <img src="{{ post.featured_image.url }}"
+               class="img-fluid mt-4"
+               alt="{{ post.title }}"
+               width="650px"/>
+          <p align="justify">{{ post.content | truncatechars:200 }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="row">        
+        <div class="col-md-8">
+          <div class="post">           
+            <h1 style="align-items: center;">
+              Nothing Found.
+            </h1>            
+          </div>
+        </div>
+      
+    {% endfor %}
+    {% include "blog/partials/recent_posts.html" %}
+  {% endblock content %}
+</div>

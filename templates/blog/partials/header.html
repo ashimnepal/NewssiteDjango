@@ -1,0 +1,20 @@
+<div class="page-header">
+  {% if user.is_authenticated %}
+    <p class="top-menu" style="font-family: Lobster; font-size: 30px;">
+      Hello, [{{ user.username }}] <small>(<a href="{% url 'logout' %}">Log out</a>)</small>
+    </p>
+    <a href="{% url 'post-draft-list' %}" class="top-menu">
+      <span class="material-symbols-outlined md-48">search_off</span>
+    </a>
+    <a href="{% url 'post-create' %}" class="top-menu">
+      <span class="material-symbols-outlined md-48">add</span>
+    </a>
+  {% else %}
+    <a href="{% url 'login' %}" class="top-menu">
+      <span class="material-symbols-outlined md-48">login</span>
+    </a>
+  {% endif %}
+  <h1>
+    <a href="/">Personal Blog</a>
+  </h1>
+</div>

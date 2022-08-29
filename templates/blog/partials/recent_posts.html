@@ -1,0 +1,37 @@
+<div class="col-md-3">
+  <!-- Recent Post -->
+  <div>
+    <h1>Recent Posts</h1>
+    {% for recent_post in recent_posts %}
+      <div class="thumbnail">
+        <img src="{{ recent_post.featured_image.url }}"
+             alt="{{ recent_post.title }}"
+             width="220px"/>
+        <div class="caption">
+          <h3>
+            <a href="{% url 'post-detail' pk=recent_post.pk %}">{{ recent_post.title }}</a>
+          </h3>
+          <p>{{ recent_post.content | striptags | truncatechars:50 }}</p>
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- TOP POST -->
+
+    <div>
+      <h1>Top Post</h1>
+      {% for top_post in top_posts %}
+        <div class="thumbnail">
+          <img src="{{ top_post.featured_image.url }}"
+               alt="{{ top_post.title }}"
+               width="220px"/>
+          <div class="caption">
+            <h3>
+              <a href="{% url 'post-detail' pk=top_post.pk %}">{{ top_post.title }}</a>
+            </h3>
+            <p>{{ top_post.content | striptags | truncatechars:50 }}</p>
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</div>
