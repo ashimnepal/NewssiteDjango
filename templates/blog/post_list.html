@@ -1,11 +1,11 @@
 {% extends "blog/base.html" %}
 
-  {% if current_Category_name%}
+  {% if current_c ategory_name%}
     {% block title%}
       {{ current_category_name }}
     {%endblock title%}
   {% endif %}
-  
+
   {% block content %}
     <div class="row">
       {% for post in posts %}
