@@ -1,10 +1,13 @@
 {% extends "blog/base.html" %}
 
-  {% if current_category_name%}
-    {% block title%}
+{% block title%}
+  {% if current_category_name %}    
       {{ current_category_name }}
-    {%endblock title%}
-  {% endif %}
+  {% else %}
+      Newspaper
+    {% endif %}
+{% endblock title %}
+  
 
   {% block content %}
     <div class="row">
