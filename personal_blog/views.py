@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect, get_object_or_404, render
 from django.utils import timezone
@@ -5,6 +6,7 @@ from django.views.generic import DetailView, ListView, View, UpdateView, CreateV
 from django.urls import reverse_lazy
 from .forms import PostForm
 from .models import Category, Post
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class CategoryMixin:
@@ -26,6 +28,12 @@ class PostListView(CategoryMixin, ListView):
     context_object_name = "posts"
     queryset = Post.objects.filter(status="published").order_by("-published_at")
 
+class DraftListView(CategoryMixin, ListView, LoginRequiredMixin):
+    model = Post
+    template_name = "blog/post_draft_list.html"
+    context_object_name = "drafts"
+    queryset = Post.objects.filter(status="unpublished").order_by("-created_at")
+
 
 class PostListByCategory(View):
     model = Post
@@ -34,6 +42,13 @@ class PostListByCategory(View):
     def get(self, request, cat_id, *args, **kwargs):
         posts = Post.objects.filter(category=cat_id).order_by("published_at")
         categories = Category.objects.all().order_by("name")
+        recent_posts = Post.objects.filter(status="published").order_by(
+            "-created_at"
+        )[:5]
+        top_posts = Post.objects.filter(status="published").order_by(
+            "-views_count"
+        )[:5]
+        current_category = Category.objects.get(id=cat_id)
 
         return render(
             request,
@@ -42,6 +57,9 @@ class PostListByCategory(View):
                 "posts": posts,
                 "categories": categories,
                 "current_category_id": cat_id,
+                "current_category_name": current_category.name,
+                "recent_posts":recent_posts,
+                "top_posts": top_posts,
             },
         )
 

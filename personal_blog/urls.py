@@ -2,6 +2,7 @@ from unicodedata import name
 from django.urls import path
 
 from .views import (
+    DraftListView,
     PostCreateView,
     PostDetailView,
     PostListByCategory,
@@ -34,7 +35,7 @@ urlpatterns = [
     ),
     path(
         "post-draft-list/",
-        post_draft_list,
+        DraftListView.as_view(),
         name="post-draft-list",
     ),
     path(

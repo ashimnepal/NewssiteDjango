@@ -1,12 +1,33 @@
 {% extends "blog/base.html" %}
 {% block content %}
-  {% for draft in drafts  %}
-    <div class="post">
-      <p class="date">created: {{ draft.created_at }}</p>
-      <h1>
-        <a href="/post-detail/{{ draft.pk}}/">{{ draft.title }}</a>
-      </h1>
-      <p class="justify">{{ draft.text | truncatechars:200 }}</p>
-    </div>
-  {% endfor %}
-{% endblock content %}
+  
+    <div class="row">
+      {% for post in drafts  %}
+      <div class="col-md-10">
+        <div class="post">
+          {% if post.created_at %}<div class="date">{{ post.created_at }}</div>{% endif %}
+          <h1>
+            <a href="/post-detail/{{ post.pk }}/">{{ post.title }}</a>
+          </h1>
+          {% include "blog/partials/tags.html" %}
+          <img src="{{ post.featured_image.url }}"
+               class="img-fluid mt-4"
+               alt="{{ post.title }}"
+               width="650px"/>
+          <p align="justify">{{ post.content | striptags | truncatechars:200 }}</p>
+        </div>
+      </div>
+      {% empty %}
+      <div class="row">        
+        <div class="col-md-8">
+          <div class="post">           
+            <h1 style="align-items: center;">
+              Nothing Found.
+            </h1>            
+          </div>
+        </div>
+      
+    {% endfor %}
+    
+  {% endblock content %}
+</div>

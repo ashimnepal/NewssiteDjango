@@ -1,6 +1,12 @@
 {% extends "blog/base.html" %}
-{% block content %}
+
+  {% if current_Category_name%}
+    {% block title%}
+      {{ current_category_name }}
+    {%endblock title%}
+  {% endif %}
   
+  {% block content %}
     <div class="row">
       {% for post in posts %}
       <div class="col-md-8">
@@ -14,7 +20,7 @@
                class="img-fluid mt-4"
                alt="{{ post.title }}"
                width="650px"/>
-          <p align="justify">{{ post.content | truncatechars:200 }}</p>
+          <p align="justify">{{ post.content | striptags|  truncatechars:200 }}</p>
         </div>
       </div>
       {% empty %}

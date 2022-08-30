@@ -6,8 +6,13 @@
         
         <span class="badge badge-warning tags">{{ tag.name }}</span>
       </a>
+      
     {% endfor %}
+    
     {% if user.is_authenticated %}
+            <a href="">        
+              <span class="badge badge-warning tags">{{ post.author.username }}</span>
+            </a>
             <a href="/post-edit/{{post.pk}}" class="btn btn-default"><span class="material-icons">
                 edit
             </span>
@@ -16,6 +21,7 @@
                 delete
             </span>
         </a>
+        
         {% endif %}
   </div>
   
